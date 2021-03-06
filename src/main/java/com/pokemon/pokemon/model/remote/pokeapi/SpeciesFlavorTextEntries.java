@@ -1,0 +1,15 @@
+package com.pokemon.pokemon.model.remote.pokeapi;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+public @Data class SpeciesFlavorTextEntries {
+
+    private String flavor_text;
+
+    private SpeciesLanguage language;
+
+}
