@@ -1,2 +1,2 @@
-# pokespear
-An end point that when given a pokemon name returns the shakespearean description 
+# Pokemon Service
+A service designed to get details about a given pokemon name
