@@ -56,6 +56,4 @@ public class PokemonServiceTest {
         Assertions.assertThrows(RuntimeException.class, () -> pokemonService.getPokemonRsp("TestPokemon"));
     }
 
-    //TODO test for enhanced validation
-
 }

@@ -4,6 +4,12 @@ import com.pokespear.pokespear.model.PokemonRsp;
 import com.pokespear.pokespear.model.remote.funtranslations.TranslateContents;
 import com.pokespear.pokespear.model.remote.funtranslations.TranslateShakespeareRsp;
 import com.pokespear.pokespear.model.remote.funtranslations.TranslateSuccess;
+import com.pokespear.pokespear.model.remote.pokeapi.PokeApiSpeciesRsp;
+import com.pokespear.pokespear.model.remote.pokeapi.SpeciesFlavorTextEntries;
+import com.pokespear.pokespear.model.remote.pokeapi.SpeciesLanguage;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class TestingUtil {
 
@@ -12,6 +18,12 @@ public class TestingUtil {
     }
 
     public static TranslateShakespeareRsp getStringToShakespeareanRsp() {
-        return new TranslateShakespeareRsp(new TranslateSuccess(), new TranslateContents("shakespeare", "Test Translated"));
+        return new TranslateShakespeareRsp(new TranslateSuccess(), new TranslateContents("Test Translated", "shakespeare"));
+    }
+
+    public static Object getPokeApiSpeciesRsp() {
+        ArrayList<SpeciesFlavorTextEntries> speciesFlavorTextEntries = new ArrayList<>();
+        speciesFlavorTextEntries.add(new SpeciesFlavorTextEntries("Text", new SpeciesLanguage("en")));
+        return new PokeApiSpeciesRsp(speciesFlavorTextEntries);
     }
 }

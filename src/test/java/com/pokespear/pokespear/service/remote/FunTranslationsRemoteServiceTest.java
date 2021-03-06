@@ -1,12 +1,22 @@
 package com.pokespear.pokespear.service.remote;
 
+import com.pokespear.pokespear.util.TestingUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
+
+import java.nio.charset.Charset;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class FunTranslationsRemoteServiceTest {
@@ -15,7 +25,7 @@ public class FunTranslationsRemoteServiceTest {
     private FunTranslationsRemoteServiceImpl funTranslationsRemoteService;
 
     @Mock
-    private RestTemplate restTemplate;
+    private RemoteCallingService remoteCallingService;
 
     @BeforeEach
     public void setup() {
@@ -24,23 +34,23 @@ public class FunTranslationsRemoteServiceTest {
 
     @Test
     public void testTranslateStringToShakespearean(){
-        //TODO remote call testing issues with mocking RestResponse
+        when(remoteCallingService.remotePostCall(any(), any(), any())).thenReturn(TestingUtil.getStringToShakespeareanRsp());
+        String translated = funTranslationsRemoteService.translateStringToShakespearean("Test");
+        assertEquals("Test Translated", translated);
     }
 
     @Test
     public void testTranslateStringToShakespeareanError(){
-        //TODO will test if the End point throws a breaking error
+        when(remoteCallingService.remotePostCall(any(), any(), any())).thenReturn(TestingUtil.getStringToShakespeareanRsp());
+        String translated = funTranslationsRemoteService.translateStringToShakespearean("Test");
+        assertEquals("Test Translated", translated);
     }
 
     @Test
     public void testTranslateStringToShakespeareanRateLimitError(){
-        //TODO will test when the end point reaches rate limit
+        when(remoteCallingService.remotePostCall(any(), any(), any()))
+                .thenThrow(HttpClientErrorException.create(HttpStatus.TOO_MANY_REQUESTS, "TOO MANY REQUESTS", new HttpHeaders(), new byte[0], Charset.defaultCharset()));
+        Assertions.assertThrows(RuntimeException.class, () -> funTranslationsRemoteService.translateStringToShakespearean("Test"));
     }
-
-    @Test
-    public void testTranslateStringToShakespeareanRequestInvalid(){
-        //TODO will test if the request string is invalid
-    }
-
 
 }

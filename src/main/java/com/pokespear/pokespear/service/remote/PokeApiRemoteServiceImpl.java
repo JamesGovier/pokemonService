@@ -2,6 +2,7 @@ package com.pokespear.pokespear.service.remote;
 
 import com.pokespear.pokespear.model.remote.pokeapi.PokeApiSpeciesRsp;
 import com.pokespear.pokespear.model.remote.pokeapi.SpeciesFlavorTextEntries;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -9,6 +10,15 @@ import java.util.ArrayList;
 
 @Service
 public class PokeApiRemoteServiceImpl implements PokeApiRemoteService {
+
+    private String POKEMON_SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
+
+    @Autowired
+    private final RemoteCallingService remoteCall;
+
+    public PokeApiRemoteServiceImpl(RemoteCallingService remoteCall) {
+        this.remoteCall = remoteCall;
+    }
 
     @Override
     public String getPokemonDescription(String pokemon) {
@@ -24,14 +34,6 @@ public class PokeApiRemoteServiceImpl implements PokeApiRemoteService {
 
     @Override
     public PokeApiSpeciesRsp getPokemonSpecies(String pokemon) {
-        //TODO refactor URLs to a constant file
-        String url = "https://pokeapi.co/api/v2/pokemon-species/" + pokemon;
-        return (PokeApiSpeciesRsp) remoteCall(url, new PokeApiSpeciesRsp());
-    }
-
-    //TODO extract this to a generic class so it can be re-used
-    private Object remoteCall(String url, Object responseObject){
-        RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(url, responseObject.getClass());
+        return (PokeApiSpeciesRsp) remoteCall.remoteGetCall(POKEMON_SPECIES_URL + pokemon, new PokeApiSpeciesRsp());
     }
 }
