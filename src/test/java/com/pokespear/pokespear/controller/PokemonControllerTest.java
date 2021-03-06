@@ -39,4 +39,10 @@ public class PokemonControllerTest {
                 .andExpect(content().string(containsString("{\"name\":\"TestPokemon\",\"description\":\"Test Description\"}")));
     }
 
+    @Test
+    public void testGetPokemonEmptyString() throws Exception {
+        when(pokemonService.getPokemonRsp(any())).thenReturn(TestingUtil.getPokemonRsp());
+        mockMvc.perform(get("/pokemon/")).andDo(print()).andExpect(status().isNotFound());
+    }
+
 }

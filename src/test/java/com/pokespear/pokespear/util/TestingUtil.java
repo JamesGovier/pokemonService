@@ -9,7 +9,6 @@ import com.pokespear.pokespear.model.remote.pokeapi.SpeciesFlavorTextEntries;
 import com.pokespear.pokespear.model.remote.pokeapi.SpeciesLanguage;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class TestingUtil {
 
@@ -24,6 +23,13 @@ public class TestingUtil {
     public static Object getPokeApiSpeciesRsp() {
         ArrayList<SpeciesFlavorTextEntries> speciesFlavorTextEntries = new ArrayList<>();
         speciesFlavorTextEntries.add(new SpeciesFlavorTextEntries("Text", new SpeciesLanguage("en")));
+        return new PokeApiSpeciesRsp(speciesFlavorTextEntries);
+    }
+
+    public static Object getPokeApiSpeciesMultipleLanagueRsp() {
+        ArrayList<SpeciesFlavorTextEntries> speciesFlavorTextEntries = new ArrayList<>();
+        speciesFlavorTextEntries.add(new SpeciesFlavorTextEntries("OuiOui", new SpeciesLanguage("fr")));
+        speciesFlavorTextEntries.add(new SpeciesFlavorTextEntries("YesYes", new SpeciesLanguage("en")));
         return new PokeApiSpeciesRsp(speciesFlavorTextEntries);
     }
 }

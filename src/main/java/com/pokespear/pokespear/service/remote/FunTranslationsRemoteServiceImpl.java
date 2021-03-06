@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 
+import static com.pokespear.pokespear.contants.Constants.SHAKESPEARE_TRANSLATE_URL;
+
 @Service
 public class FunTranslationsRemoteServiceImpl implements FunTranslationsRemoteService {
-
-    private static final String SHAKESPEARE_TRANSLATE = "https://api.funtranslations.com/translate/shakespeare.json";
 
     @Autowired
     private final RemoteCallingService remoteCallingService;
@@ -23,7 +23,7 @@ public class FunTranslationsRemoteServiceImpl implements FunTranslationsRemoteSe
         //TODO validation on response
         TranslateShakespeareRqst translateShakespeareRqst = new TranslateShakespeareRqst(description);
         TranslateShakespeareRsp response =
-                (TranslateShakespeareRsp) remoteCallingService.remotePostCall(SHAKESPEARE_TRANSLATE, new TranslateShakespeareRsp(), new HttpEntity<>(translateShakespeareRqst, remoteCallingService.getDefaultHeaders()));
+                (TranslateShakespeareRsp) remoteCallingService.remotePostCall(SHAKESPEARE_TRANSLATE_URL, new TranslateShakespeareRsp(), new HttpEntity<>(translateShakespeareRqst, remoteCallingService.getDefaultHeaders()));
         return response.getContents().getTranslated();
     }
 
