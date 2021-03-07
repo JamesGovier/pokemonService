@@ -1,0 +1,52 @@
+swagger: "2.0"
+info:
+  description: "A service designed to get details about a given pokemon name"
+  version: "1.0.0"
+  title: "Pokemon Service"
+host: "localhost"
+basePath: "/"
+schemes:
+  - "http"
+paths:
+  /pokemon/{pokemon}:
+    post:
+      tags:
+        - "Cleaner"
+      summary: "Add a new pet to the store"
+      description: ""
+      operationId: "addPet"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "pokemon"
+          description: "Name of a pokemon to retireve details about "
+          required: true
+          type : string
+      responses:
+        "200":
+          description: A pokemon detail
+          schema:
+            $ref: '#/definitions/PokemonRsp'
+        "400":
+          description: "Bad Request"
+        "404":
+          description: "Not Found"
+        "429":
+          description: "Too Many Requests"
+definitions:
+  PokemonRsp:
+    type: "object"
+    properties:
+      name:
+        type: string
+        description : "Name of pokemon"
+        example: "charizard"
+      description:
+        type: string
+        description: "Descitpion for a pokemon"
+externalDocs:
+  description: "See Git Repo"
+  url: "https://github.com/JamesGovier/pokemonService"
